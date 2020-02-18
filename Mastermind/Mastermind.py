@@ -6,7 +6,7 @@ def mastermind():
     codeGuess = [' ', ' ', ' ', ' ']
     positionCorrect = 0
     colorCorrect = 0
-    for i in range(10):
+    for i in range(10):             # 10 beurten om te spelen
         gameBord = gameBordCreate(gameBord, codeGuess, positionCorrect, colorCorrect)
     for gameBordLines in gameBord:
         print(gameBordLines)
@@ -17,7 +17,7 @@ def mastermind():
         code = guess()
         algorithm = input("Welk algoritme wilt u runnen? [random/simple]")
     possibility = breaker.combinationList()
-    for x in range(10):
+    for x in range(10):             # 10 beurten om te checken(?)
         if player == 'kraker':
             codeGuess = guess()
         else:
@@ -30,11 +30,11 @@ def mastermind():
                 possibility = breaker.simple(positionCorrect, colorCorrect, possibility, x)
                 codeGuess = possibility[0]
         gameBord = mastermindPlay(code, gameBord, codeGuess)
-        if gameBord == True:
+        if gameBord == True:        # Eindigt de loop bij een goede gok
             print('Je bent een mastermind, het is je gelukt de code te kraken! Het kostte je: ' + str(
                 x + 1) + ' beurten! \n')
             break
-        else:
+        else:                       # Anders naar de volgende beurt
             for turn in gameBord:
                 print(turn)
 
@@ -48,11 +48,11 @@ def mastermindPlay(code, gameBord, codeGuess):
         return True
     else:
         return gameBord
-def checkGuess(code, codeGuess):
+def checkGuess(code, codeGuess):    # Checkt de gok
     print(code)
     positionCorrect = 0
     colorCorrect = 0
-    codeList = []
+    codeList = []                   # Kopie van de gok, zodat deze gemanipuleerd kan worden
     codeList += codeGuess
     for color in code:
         for p in codeList:
@@ -63,7 +63,7 @@ def checkGuess(code, codeGuess):
     for x in range(len(codeGuess)):
         if codeGuess[x] == code[x]:
             positionCorrect += 1
-    colorCorrect -= positionCorrect
+    colorCorrect -= positionCorrect     # Voorkomt dat er meer dan 4 totaal uitkomt
     return positionCorrect, colorCorrect
 def gameBordCreate(gameBord, codeGuess, positionCorrect, colorCorrect):
     gameBordFullPlus = ["({})({})({})({})  [{}][{}] ".format(codeGuess[0], codeGuess[1], codeGuess[2], codeGuess[3], positionCorrect, colorCorrect)]
@@ -78,13 +78,13 @@ def guess():
             color = (input("Kies kleur {}: ".format(x+1))).lower()
         codeGuess.append(color)
     return codeGuess
-def randomCode():
+def randomCode():                   #Maakt een willekeurige code aan
     import random
     code = []
     for x in range(4):
         code += random.choice(['r', 'b', 'g', 'p', 'z', 'w'])
     return code
-def mastermindPlayerChoice():
+def mastermindPlayerChoice():       #Legt keuze speler vast
     player = 'error'
     while player == 'error':
         playerChoice = input("Welke speler wilt u zijn? Code-kraker of Code-bedenker[kraker/bedenker]: ")
